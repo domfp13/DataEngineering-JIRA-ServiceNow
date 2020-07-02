@@ -35,6 +35,7 @@ $ cd DataEngineering-JIRA-ServiceNow
 $ conda create -n venv python=3.7
 $ conda activate venv
 $ pip install -r requirements.txt
+$ python main_test_locally.py
 ```
 Note: To run locally deactivate python decorators and add your own ServiceNow credentials.
 
@@ -49,13 +50,13 @@ $ pip freeze --local > requirements.txt
 GCP builds the container therefore the requirements.txt needs to be provided
 
 ```sh
-FROM python:3
+FROM python:3.7-alpine
 FROM python:3.7-slim-buster
-WORKDIR /usr/src/app
-COPY requirements.txt ./
+WORKDIR /code
+COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
-CMD [ "python", "./main.py" ]
+CMD [ "python", "./main_test_locally.py" ]
 ```
 
 ### Todos
@@ -65,3 +66,5 @@ CMD [ "python", "./main.py" ]
  
 ## Authors
 * **Luis Fuentes** - *2020-06-30*
+* **Daniel Steinemann** - *2020-06-30*
+* **Angel Angel** - *2020-06-30*
