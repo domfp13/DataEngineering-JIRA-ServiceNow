@@ -1,4 +1,4 @@
-astroid @ file:///opt/concourse/worker/volumes/live/b22b518b-f584-4586-5ee9-55bfa4fca96e/volume/astroid_1592495912194/work
+astroid==2.3.3
 beautifulsoup4==4.9.1
 bs4==0.0.1
 cachetools==4.1.1
