@@ -9,6 +9,7 @@ from typing import Optional
 from json import dumps
 import logging
 import pandas as pd
+import request
 
 # Local Modules
 from etl.GeneralFunctions import getGroupIds, convertToCSV, send_to_bucket
