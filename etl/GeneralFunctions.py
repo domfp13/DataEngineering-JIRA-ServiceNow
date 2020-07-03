@@ -82,7 +82,7 @@ def getPassword()->str:
     Returns: 
         (str)
     """
-    return 'Compu.com94' # Add your own creds if running locally
+    return '' # Add your own creds if running locally
 
 def decoratorGetPath(function):
     def wrapper(file_name:str):
