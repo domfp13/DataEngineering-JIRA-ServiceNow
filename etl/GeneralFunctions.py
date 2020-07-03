@@ -3,8 +3,35 @@
 # Daniel Steinemann
 # Angel Angel
 
+# External Modules
 from typing import Optional
+import pandas as pd
 
+# Local Modules
+from etl.EtlServiceNowClasses import Users
+
+def mergingWithUsers(data_concat:pd.DataFrame, users:Users)->pd.DataFrame:
+    """Merges two dataframes, for rows which there is no data for users, the columns will
+    be fill out with np.NaN.
+
+    Args:
+        data_concat (pd.DataFrame): Task.df + Incidents.df 
+        users (Users): Object type Users
+
+    Returns:
+        pd.DataFrame: This will be the DataFrame result for the merge between the two DataFrames.
+    """
+    import numpy as np
+    
+    join_data = pd.merge(data_concat, users.df, how='left', left_on='assigned_to', right_on='u_visible_sys_id')
+
+    lst = list(join_data[(join_data['email'] == '') & (join_data['employee_number'] == '')].index)
+
+    for column in ['active', 'email', 'employee_number', 'first_name','last_name', 'u_visible_sys_id']:
+        join_data[column].iloc[lst] = np.NaN
+    
+    return join_data
+    
 def getGroupIds() -> dict:
     """From a Google Sheet gets data from groups, this is part of another module in this project
     This is a javaScript project on a Node.js (API as a gateway in Gsheets)
@@ -38,7 +65,7 @@ def getUserName()->str:
     Returns: 
         (str)
     """
-    return '' # Add your own creds if running locally
+    return 'daniel.steinemann@compucom.com' # Add your own creds if running locally
 
 def decoratorGetPassword(function):
     def wrapper():
@@ -55,7 +82,7 @@ def getPassword()->str:
     Returns: 
         (str)
     """
-    return '' # Add your own creds if running locally
+    return 'Compu.com94' # Add your own creds if running locally
 
 def decoratorGetPath(function):
     def wrapper(file_name:str):
