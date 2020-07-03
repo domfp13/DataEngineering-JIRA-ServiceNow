@@ -34,28 +34,32 @@ class Users:
     Returns:
         None
     """
+    # if self.ids is 
+    if len(self.ids) != 0:
+      #creating List that will hold the dictionaries
+      final_list = []
 
-    #creating List that will hold the dictionaries
-    final_list = []
+      # Transforming set to list
+      lst = list(self.ids)
+      # Creating a generator so the data gets process by chucks of users
+      def chunks(lst:list, n:int):
+        for i in range(0, len(lst), n):
+            yield lst[i:i + n]
 
-    # Transforming set to list
-    lst = list(self.ids)
-
-    # Creating a generator so the data gets process by chucks of users
-    def chunks(lst:list, n:int):
-      for i in range(0, len(lst), n):
-          yield lst[i:i + n]
-
-    # Uses the chuncks inner function in chuncks of 10 different users
-    for chuck in chunks(lst, 10):
-      concatenatedString = ""
-      for assigned_to in chuck:
-        concatenatedString = "{x}{y}^ORu_visible_sys_id%3D".format(x = concatenatedString, y = assigned_to)
-    
-      for x in self.__session_handler.instance.get('{url}{ids}{json}'.format(url=self.__url, ids=concatenatedString[:len(concatenatedString)-22], json='&JSON')).json()['records']:
-        final_list.append(User(**x).values())
-    
-    self.df = pd.DataFrame(final_list)
+      # Uses the chuncks inner function in chuncks of 10 different users
+      for chuck in chunks(lst, 10):
+        concatenatedString = ""
+        for assigned_to in chuck:
+          concatenatedString = "{x}{y}^ORu_visible_sys_id%3D".format(x = concatenatedString, y = assigned_to)
+      
+        for x in self.__session_handler.instance.get('{url}{ids}{json}'.format(url=self.__url, ids=concatenatedString[:len(concatenatedString)-22], json='&JSON')).json()['records']:
+          final_list.append(User(**x).values())
+      
+      self.df = pd.DataFrame(final_list)
+    else:
+      # if there are no self.ids then return an empty Dataframe
+      self.df = pd.DataFrame([{}], columns= ['active', 'email', 'employee_number', 'first_name', 'last_name','u_visible_sys_id'])
+      self.df.fillna("", inplace=True)
 
 # Tasks
 class Task(Abstract):
