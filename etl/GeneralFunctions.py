@@ -55,7 +55,7 @@ def decoratorGetUserName(function):
         from os import environ
         return environ.get('USERNAME')
     return wrapper
-#@decoratorGetUserName
+@decoratorGetUserName
 def getUserName()->str:
     """Returns the email provided by your ServiceNow user this is needed to execute locally when deployed the decorator
        needs to be activated.  
@@ -65,14 +65,14 @@ def getUserName()->str:
     Returns: 
         (str)
     """
-    return 'daniel.steinemann@compucom.com' # Add your own creds if running locally
+    return '' # Add your own creds if running locally
 
 def decoratorGetPassword(function):
     def wrapper():
         from os import environ
         return environ.get('PASSWORD')
     return wrapper
-#@decoratorGetPassword
+@decoratorGetPassword
 def getPassword()->str:
     """Returns the password provided by your ServiceNow user this is needed to execute locally when deployed the decorator
        needs to be activated. 
