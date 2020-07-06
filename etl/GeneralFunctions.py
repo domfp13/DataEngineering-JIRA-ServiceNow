@@ -111,10 +111,11 @@ def convertToCSV(df, group_id)->str:
         str: file_full_path
     """
     from csv import QUOTE_ALL
-    import datetime
-    from datetime import date
-    
-    file_name = '{id}_{year}_{month}_{day}.csv'.format(id=group_id, year=date.today().year, month=date.today().month, day=date.today().day)
+    from pytz import timezone
+    from datetime import datetime
+
+    us_central = datetime.now(timezone('US/Central'))
+    file_name = '{id}_{year}_{month}_{day}.csv'.format(id=group_id, year=us_central.year, month=us_central.month, day=us_central.day)
     file_full_path = getPath(file_name)
 
     df.to_csv(file_full_path, header=True, index=False, sep=',', quoting=QUOTE_ALL, escapechar = ' ')
