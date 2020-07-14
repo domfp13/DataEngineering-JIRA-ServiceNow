@@ -11,3 +11,6 @@ __pycache__/
 
 # CSV
 *.csv
+
+# Logger
+LOGGER.log
